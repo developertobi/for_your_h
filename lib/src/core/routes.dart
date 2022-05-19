@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:for_your_head/src/features/views/creating_teams_view.dart';
 
 import '../features/views/home_view.dart';
+import '../features/views/selected_teams_confirmation_view.dart';
+import '../features/views/team_details_view.dart';
 
 class Routes {
   static const home = '/home';
+  static const teamDetails = '/team-details';
+  static const selectedTeamsDetails = '/selected-team-details';
+  static const creatingTeams = '/creating-teams';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case home:
         return MaterialPageRoute(builder: (_) => const HomeView());
+      case teamDetails:
+        return MaterialPageRoute(builder: (_) => const TeamDetailsView());
+      case selectedTeamsDetails:
+        return MaterialPageRoute(
+            builder: (_) => const SelectedTeamsConfirmationView());
+      case creatingTeams:
+        return MaterialPageRoute(builder: (_) => const CreatingTeamsView());
 
       default:
         return MaterialPageRoute(

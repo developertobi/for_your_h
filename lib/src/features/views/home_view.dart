@@ -300,27 +300,19 @@ class HomeView extends StatelessWidget {
                                 ),
                               ),
                               const Spacing.height(41),
-                              const AppButton(
+                              AppButton(
                                 text: 'CONTINUE',
                                 fontSize: 16,
                                 backgroundColor: const Color(0xffEFA83C),
                                 textColor: AppColors.dark,
                                 borderColor: AppColors.dark,
                                 height: 48,
+                                onPressed: () => Navigator.pushNamed(
+                                    context, Routes.teamDetails),
                               ),
                             ],
                           ),
                         ),
-                        // actions: const [
-                        //   AppButton(
-                        //     text: 'CONTINUE',
-                        //     fontSize: 16,
-                        //     backgroundColor: Color(0xffEFA83C),
-                        //     textColor: AppColors.dark,
-                        //     borderColor: AppColors.dark,
-                        //     height: 48,
-                        //   )
-                        // ],
                       );
                     },
                   );
