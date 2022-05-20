@@ -4,6 +4,7 @@ import 'package:for_your_head/src/core/constants/images.dart';
 import 'package:for_your_head/src/core/routes.dart';
 import 'package:for_your_head/src/widgets/app_big_button.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
+import 'package:for_your_head/src/widgets/app_dialog.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
 class HomeView extends StatelessWidget {
@@ -66,11 +67,7 @@ class HomeView extends StatelessWidget {
                     context: context,
                     barrierDismissible: false,
                     builder: (context) {
-                      return AlertDialog(
-                        contentPadding: EdgeInsets.zero,
-                        actionsPadding: EdgeInsets.zero,
-                        buttonPadding: EdgeInsets.zero,
-                        titlePadding: EdgeInsets.zero,
+                      return AppDialog(
                         title: Container(
                           height: 104,
                           decoration: const BoxDecoration(
