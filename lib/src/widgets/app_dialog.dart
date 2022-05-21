@@ -16,6 +16,7 @@ class AppDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Colors.transparent,
       contentPadding: EdgeInsets.zero,
       actionsPadding: EdgeInsets.zero,
       buttonPadding: EdgeInsets.zero,

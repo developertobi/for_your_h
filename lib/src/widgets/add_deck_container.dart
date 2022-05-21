@@ -1,7 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:for_your_head/src/core/constants/images.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
+import 'package:for_your_head/src/widgets/app_checkbox.dart';
+import 'package:for_your_head/src/widgets/app_dialog.dart';
+import 'package:for_your_head/src/widgets/app_text_field.dart';
+import 'package:for_your_head/src/widgets/close_button.dart';
+import 'package:for_your_head/src/widgets/image_container.dart';
+import 'package:for_your_head/src/widgets/search_text_field_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
 import '../core/constants/colors.dart';
@@ -54,9 +59,9 @@ class AddDeckContainer extends StatelessWidget {
                             const AppButton(
                               text: 'Nigerian Culture',
                               fontSize: 11.8,
-                              borderColor: const Color(0xff0F96C5),
-                              textColor: const Color(0xff060000),
-                              backgroundColor: const Color(0xffDFF0F7),
+                              borderColor: Color(0xff0F96C5),
+                              textColor: Color(0xff060000),
+                              backgroundColor: Color(0xffDFF0F7),
                               height: 26,
                               width: null,
                             ),
@@ -75,31 +80,6 @@ class AddDeckContainer extends StatelessWidget {
                   ],
                 ),
               )
-            // ListTile(
-            //         dense: true,
-            //         leading: Image.asset(AppImages.diamond),
-            //         title: Text(
-            //           'Round $roundNo',
-            //           style: const TextStyle(
-            //             color: Color(0xff175B73),
-            //           ),
-            //         ),
-            //         subtitle: AppButton(
-            //           text: 'Nigerian Culture',
-            //           borderColor: Color(0xff0F96C5),
-            //           textColor: Color(0xff060000),
-            //           backgroundColor: Color(0xffDFF0F7),
-            //           height: 26,
-            //           width: null,
-            //         ),
-            //         trailing: AppButton(
-            //           text: 'Nigerian Culture',
-            //           borderColor: Color(0xff0F96C5),
-            //           textColor: Color(0xff060000),
-            //           backgroundColor: Color(0xffDFF0F7),
-            //           width: null,
-            //         ),
-            //       )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -112,7 +92,150 @@ class AddDeckContainer extends StatelessWidget {
                   const Spacing.tinyHeight(),
                   //TODO: Make this a dotted border
                   GestureDetector(
-                    onTap: onAddToDeckTapped,
+                    onTap: () {
+                      showModalBottomSheet(
+                        isDismissible: false,
+                        context: context,
+                        backgroundColor: Colors.transparent.withOpacity(0.5),
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return Column(
+                            children: [
+                              const SizedBox(
+                                height: 100,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 28.0,
+                                    right: 16,
+                                  ),
+                                  child: AppCloseButton(),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(17, 23, 17, 51),
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.light,
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(10),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Select Round $roundNo Deck',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 24,
+                                          color: Color(0xff484444),
+                                        ),
+                                      ),
+                                      const Spacing.mediumHeight(),
+                                      const SearchTextField(
+                                        hintText: 'Search decks',
+                                      ),
+                                      const Spacing.height(34),
+                                      const AppButton(
+                                        text: 'All Deck',
+                                        height: 32,
+                                        width: null,
+                                        textColor: AppColors.dark,
+                                        borderColor: Color(0xff871313),
+                                        backgroundColor: Color(0xffF9EDEC),
+                                        icon: Icon(Icons.close),
+                                        hasIcon: true,
+                                      ),
+                                      const Spacing.height(23),
+                                      Row(
+                                        children: const [
+                                          ImageContainer(
+                                            imageString: 'imageString',
+                                          ),
+                                          Spacing.mediumWidth(),
+                                          ImageContainer(
+                                            imageString: 'imageString',
+                                          ),
+                                          Spacing.mediumWidth(),
+                                          ImageContainer(
+                                            imageString: 'imageString',
+                                          ),
+                                        ],
+                                      ),
+                                      const Spacing.height(30),
+                                      Row(
+                                        children: const [
+                                          ImageContainer(
+                                            imageString: 'imageString',
+                                          ),
+                                          Spacing.mediumWidth(),
+                                          ImageContainer(
+                                            imageString: 'imageString',
+                                          ),
+                                          Spacing.mediumWidth(),
+                                          ImageContainer(
+                                            imageString: 'imageString',
+                                          ),
+                                        ],
+                                      ),
+                                      const Spacing.largeHeight(),
+                                      AppCheckbox(
+                                        text: 'Apply deck to all rounds',
+                                        checked: false,
+                                        onChanged: (value) {},
+                                      ),
+                                      const Spacing.bigHeight(),
+                                      AppButton(
+                                        text: 'ADD DECK',
+                                        // TODO: Change color based on condition
+                                        backgroundColor:
+                                            const Color(0xffD0D0D0),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AppDialog(
+                                                title: Container(
+                                                  color: Colors.transparent,
+                                                  child: const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        bottom: 27),
+                                                    child: AppCloseButton(
+                                                        centerButton: true),
+                                                  ),
+                                                ),
+                                                content: Container(
+                                                  height: 504.67,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      12.46,
+                                                    ),
+                                                    image:
+                                                        const DecorationImage(
+                                                      fit: BoxFit.fill,
+                                                      image: AssetImage(
+                                                          AppImages.diamond),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
