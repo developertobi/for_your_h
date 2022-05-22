@@ -8,15 +8,17 @@ class AppDialog extends StatelessWidget {
     this.title,
     required this.content,
     this.takeAllSpace = false,
+    this.backgroundColor = Colors.transparent,
   }) : super(key: key);
   final Widget? title;
   final Widget? content;
   final bool takeAllSpace;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.transparent,
+      backgroundColor: backgroundColor,
       contentPadding: EdgeInsets.zero,
       actionsPadding: EdgeInsets.zero,
       buttonPadding: EdgeInsets.zero,

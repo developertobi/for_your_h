@@ -46,68 +46,9 @@ class AddDeckView extends StatelessWidget {
                               barrierDismissible: false,
                               context: context,
                               builder: (context) {
-                                return AppDialog(
-                                  content: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 54,
-                                      horizontal: 24,
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () => Navigator.pop(context),
-                                          child: Container(
-                                            width: 88,
-                                            height: 88,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                              gradient: const LinearGradient(
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                                colors: [
-                                                  Color(0xff6C1D1D),
-                                                  Color(0xffEF473C),
-                                                ],
-                                              ),
-                                            ),
-                                            child: const Icon(
-                                              Icons.close,
-                                              color: AppColors.light,
-                                              size: 30,
-                                            ),
-                                          ),
-                                        ),
-                                        const Spacing.height(31),
-                                        const Text(
-                                          'Are you sure you want to cancel?',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 26,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.dark,
-                                          ),
-                                        ),
-                                        const Spacing.height(52),
-                                        AppButton(
-                                          text: 'YES',
-                                          backgroundColor: Color(0xff0F96C5),
-                                          borderColor: AppColors.dark,
-                                          onPressed: () {},
-                                        ),
-                                        const Spacing.tinyHeight(),
-                                        AppButton(
-                                          text: 'NO',
-                                          textColor: AppColors.dark,
-                                          onPressed: () =>
-                                              Navigator.pop(context),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                return const AppDialog(
+                                  backgroundColor: AppColors.light,
+                                  content: DismissDialogContent(),
                                 );
                               },
                             );
@@ -147,6 +88,74 @@ class AddDeckView extends StatelessWidget {
         ),
       ),
       // bottomNavigationBar: ,
+    );
+  }
+}
+
+class DismissDialogContent extends StatelessWidget {
+  const DismissDialogContent({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 54,
+        horizontal: 24,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Container(
+              width: 88,
+              height: 88,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                gradient: const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xff6C1D1D),
+                    Color(0xffEF473C),
+                  ],
+                ),
+              ),
+              child: const Icon(
+                Icons.close,
+                color: AppColors.light,
+                size: 30,
+              ),
+            ),
+          ),
+          const Spacing.height(31),
+          const Text(
+            'Are you sure you want to cancel?',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.w600,
+              color: AppColors.dark,
+            ),
+          ),
+          const Spacing.height(52),
+          AppButton(
+            text: 'YES',
+            backgroundColor: const Color(0xff0F96C5),
+            borderColor: AppColors.dark,
+            onPressed: () {},
+          ),
+          const Spacing.tinyHeight(),
+          AppButton(
+            text: 'NO',
+            textColor: AppColors.dark,
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
     );
   }
 }
