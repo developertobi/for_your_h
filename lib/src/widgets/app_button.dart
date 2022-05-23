@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:for_your_head/src/widgets/spacing.dart';
 
 import '../core/constants/colors.dart';
 import '../core/constants/strings.dart';
@@ -14,7 +15,6 @@ class AppButton extends StatelessWidget {
   final double? height;
   final double? fontSize;
   final bool isLoading;
-  final bool hasIcon;
   final Widget? icon;
 
   const AppButton({
@@ -28,7 +28,6 @@ class AppButton extends StatelessWidget {
     this.height = 48,
     this.fontSize = 16,
     this.isLoading = false,
-    this.hasIcon = false,
     this.icon,
     this.borderColor = Colors.transparent,
   }) : super(key: key);
@@ -40,7 +39,7 @@ class AppButton extends StatelessWidget {
       child: SizedBox(
         width: width,
         height: height,
-        child: OutlinedButton.icon(
+        child: OutlinedButton(
           onPressed: isLoading ? null : onPressed,
           style: OutlinedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -49,16 +48,21 @@ class AppButton extends StatelessWidget {
             side: BorderSide(color: borderColor, width: 2),
             backgroundColor: backgroundColor,
           ),
-          label: Text(
-            isLoading ? AppStrings.loading : text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.w700,
-              fontSize: fontSize,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (icon != null) icon!,
+              Text(
+                isLoading ? AppStrings.loading : text,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: textColor,
+                  fontWeight: FontWeight.w700,
+                  fontSize: fontSize,
+                ),
+              ),
+            ],
           ),
-          icon: hasIcon ? icon! : Container(),
         ),
       ),
     );

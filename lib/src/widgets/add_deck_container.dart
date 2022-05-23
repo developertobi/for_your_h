@@ -209,7 +209,6 @@ class AddDeckBottomSheetAllDeck extends StatelessWidget {
               borderColor: Color(0xff871313),
               backgroundColor: Color(0xffF9EDEC),
               icon: Icon(Icons.close),
-              hasIcon: true,
             ),
             separatorBuilder: (context, index) => const Spacing.smallWidth(),
             itemCount: 7,
@@ -316,7 +315,6 @@ class AddDeckBottomSheetCountries extends StatelessWidget {
               borderColor: Color(0xff871313),
               backgroundColor: Color(0xffF9EDEC),
               icon: Icon(Icons.close),
-              hasIcon: true,
             ),
             separatorBuilder: (context, index) => const Spacing.smallWidth(),
             itemCount: 7,
@@ -393,7 +391,6 @@ class AddDeckBottomSheetCountries2 extends StatelessWidget {
               borderColor: Color(0xff871313),
               backgroundColor: Color(0xffF9EDEC),
               icon: Icon(Icons.close),
-              hasIcon: true,
             ),
             separatorBuilder: (context, index) => const Spacing.smallWidth(),
             itemCount: 7,
@@ -405,7 +402,7 @@ class AddDeckBottomSheetCountries2 extends StatelessWidget {
           children: [
             const Text(
               'Select A Country',
-              style: const TextStyle(
+              style: TextStyle(
                 color: Color(0xff484444),
                 fontSize: 24,
                 fontWeight: FontWeight.w600,

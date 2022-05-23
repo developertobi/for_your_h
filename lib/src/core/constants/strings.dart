@@ -16,4 +16,8 @@ class AppStrings {
 
   // Profile
   static const editProfile = 'Edit Profile';
+
+  // Others
+  static const ronaldo =
+      'https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg';
 }

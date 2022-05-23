@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:for_your_head/src/core/constants/strings.dart';
 import 'package:for_your_head/src/core/routes.dart';
 import 'package:for_your_head/src/features/views/add_deck_view.dart';
+import 'package:for_your_head/src/features/views/final_scoreboard_view.dart';
 import 'package:for_your_head/src/features/views/game_rounds_view.dart';
 import 'package:for_your_head/src/features/views/home_view.dart';
+import 'package:for_your_head/src/features/views/round_scores_view.dart';
+import 'package:for_your_head/src/features/views/team_preview_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -23,8 +26,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
       ),
-      // home: const HomeView(),
-      home: const AddDeckView(),
+      // home: const RoundScoreView(),
+      home: const FinalScoreboardView(),
+      // home: const AddDeckView(),
     );
   }
 }

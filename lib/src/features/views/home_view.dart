@@ -380,7 +380,6 @@ class HomeView extends StatelessWidget {
           ),
         ),
       ),
-      // bottomNavigationBar: ,
     );
   }
 }
