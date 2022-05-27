@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:for_your_head/src/core/constants/images.dart';
+import 'package:for_your_head/src/core/constants/strings.dart';
+import 'package:for_your_head/src/features/models/deck_model.dart';
+import 'package:for_your_head/src/features/views/game_rounds_view.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
 import 'package:for_your_head/src/widgets/app_checkbox.dart';
 import 'package:for_your_head/src/widgets/app_dialog.dart';
 import 'package:for_your_head/src/widgets/app_text_field.dart';
 import 'package:for_your_head/src/widgets/close_button.dart';
+import 'package:for_your_head/src/widgets/deck_info_dialog.dart';
 import 'package:for_your_head/src/widgets/image_container.dart';
 import 'package:for_your_head/src/widgets/search_text_field_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
 import '../core/constants/colors.dart';
 
-class AddDeckContainer extends StatelessWidget {
-  const AddDeckContainer({
+class DeckContainer extends StatelessWidget {
+  const DeckContainer({
     Key? key,
     required this.roundNo,
     this.onAddToDeckTapped,
-    this.hasDeck = false,
+    this.onReplaceDeckTapped,
+    this.deck,
   }) : super(key: key);
   final int roundNo;
   final void Function()? onAddToDeckTapped;
-  final bool hasDeck;
+  final void Function()? onReplaceDeckTapped;
+  final DeckModel? deck;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,7 @@ class AddDeckContainer extends StatelessWidget {
       child: Card(
         color: AppColors.light,
         elevation: 5,
-        child: hasDeck
+        child: deck != null
             ? Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 7, vertical: 12),
@@ -38,8 +44,8 @@ class AddDeckContainer extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Image.asset(
-                          AppImages.diamond,
+                        Image.network(
+                          deck!.deckImage,
                           width: 48,
                         ),
                         const Spacing.tinyWidth(),
@@ -56,8 +62,8 @@ class AddDeckContainer extends StatelessWidget {
                               ),
                             ),
                             const Spacing.smallHeight(),
-                            const AppButton(
-                              text: 'Nigerian Culture',
+                            AppButton(
+                              text: deck!.deckName,
                               fontSize: 11.8,
                               borderColor: Color(0xff0F96C5),
                               textColor: Color(0xff060000),
@@ -69,14 +75,14 @@ class AddDeckContainer extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const AppButton(
-                      text: 'Replace deck',
-                      fontSize: 9.62,
-                      borderColor: AppColors.dark,
-                      textColor: Color(0xffCF534A),
-                      height: 26,
-                      width: null,
-                    ),
+                    AppButton(
+                        text: 'Replace deck',
+                        fontSize: 9.62,
+                        borderColor: AppColors.dark,
+                        textColor: Color(0xffCF534A),
+                        height: 26,
+                        width: null,
+                        onPressed: onReplaceDeckTapped),
                   ],
                 ),
               )
@@ -92,17 +98,7 @@ class AddDeckContainer extends StatelessWidget {
                   const Spacing.tinyHeight(),
                   //TODO: Make this a dotted border
                   GestureDetector(
-                    onTap: () {
-                      showModalBottomSheet(
-                        isDismissible: false,
-                        context: context,
-                        backgroundColor: Colors.transparent.withOpacity(0.5),
-                        isScrollControlled: true,
-                        builder: (context) {
-                          return AddDeckBottomSheetContainer(roundNo: roundNo);
-                        },
-                      );
-                    },
+                    onTap: onAddToDeckTapped,
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -124,174 +120,7 @@ class AddDeckContainer extends StatelessWidget {
   }
 }
 
-class AddDeckBottomSheetContainer extends StatelessWidget {
-  const AddDeckBottomSheetContainer({
-    Key? key,
-    required this.roundNo,
-  }) : super(key: key);
-
-  final int roundNo;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 100,
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: 28.0,
-              right: 16,
-            ),
-            child: AppCloseButton(),
-          ),
-        ),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(17, 23, 17, 51),
-            decoration: const BoxDecoration(
-              color: AppColors.light,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(10),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Select Round $roundNo Deck',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 24,
-                        color: Color(0xff484444),
-                      ),
-                    ),
-                    const Spacing.mediumHeight(),
-                    const SearchTextField(
-                      hintText: 'Search decks',
-                    ),
-                    const Spacing.height(34),
-                  ],
-                ),
-                const AddDeckBottomSheetCountries2()
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class AddDeckBottomSheetAllDeck extends StatelessWidget {
-  const AddDeckBottomSheetAllDeck({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 32,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            // shrinkWrap: true,
-            itemBuilder: (context, index) => const AppButton(
-              text: 'All Deck',
-              height: 32,
-              width: null,
-              textColor: AppColors.dark,
-              borderColor: Color(0xff871313),
-              backgroundColor: Color(0xffF9EDEC),
-              icon: Icon(Icons.close),
-            ),
-            separatorBuilder: (context, index) => const Spacing.smallWidth(),
-            itemCount: 7,
-          ),
-        ),
-        const Spacing.height(23),
-        Row(
-          children: const [
-            ImageContainer(
-              imageString: 'imageString',
-            ),
-            Spacing.mediumWidth(),
-            ImageContainer(
-              imageString: 'imageString',
-            ),
-            Spacing.mediumWidth(),
-            ImageContainer(
-              imageString: 'imageString',
-            ),
-          ],
-        ),
-        const Spacing.height(30),
-        Row(
-          children: const [
-            ImageContainer(
-              imageString: 'imageString',
-            ),
-            Spacing.mediumWidth(),
-            ImageContainer(
-              imageString: 'imageString',
-            ),
-            Spacing.mediumWidth(),
-            ImageContainer(
-              imageString: 'imageString',
-            ),
-          ],
-        ),
-        const Spacing.largeHeight(),
-        AppCheckbox(
-          text: 'Apply deck to all rounds',
-          checked: false,
-          onChanged: (value) {},
-        ),
-        const Spacing.bigHeight(),
-        AppButton(
-          text: 'ADD DECK',
-          // TODO: Change color based on condition
-          backgroundColor: const Color(0xffD0D0D0),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AppDialog(
-                  title: Container(
-                    color: Colors.transparent,
-                    child: const Padding(
-                      padding: EdgeInsets.only(bottom: 27),
-                      child: AppCloseButton(centerButton: true),
-                    ),
-                  ),
-                  content: Container(
-                    height: 504.67,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(
-                        12.46,
-                      ),
-                      image: const DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage(AppImages.diamond),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-        ),
-      ],
-    );
-  }
-}
-
+/*
 class AddDeckBottomSheetCountries extends StatelessWidget {
   const AddDeckBottomSheetCountries({
     Key? key,
@@ -443,3 +272,4 @@ class AddDeckBottomSheetCountries2 extends StatelessWidget {
     );
   }
 }
+*/

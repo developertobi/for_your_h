@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:for_your_head/src/core/constants/strings.dart';
 import 'package:for_your_head/src/core/routes.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
 import 'package:for_your_head/src/widgets/app_text_field.dart';
@@ -6,10 +7,30 @@ import 'package:for_your_head/src/widgets/selected_team_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
 import '../../core/constants/colors.dart';
-import '../../widgets/add_deck_container.dart';
+import '../../widgets/deck_container.dart';
+import '../models/deck_model.dart';
+import 'add_deck_bottomsheet.dart';
 
-class GameRoundsView extends StatelessWidget {
-  const GameRoundsView({Key? key}) : super(key: key);
+class GameRoundsView extends StatefulWidget {
+  final int gameRounds;
+  const GameRoundsView({
+    Key? key,
+    required this.gameRounds,
+  }) : super(key: key);
+
+  @override
+  State<GameRoundsView> createState() => _GameRoundsViewState();
+}
+
+class _GameRoundsViewState extends State<GameRoundsView> {
+  late List<DeckModel?> decks;
+
+  @override
+  void initState() {
+    super.initState();
+
+    decks = List.filled(widget.gameRounds, null);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,31 +55,56 @@ class GameRoundsView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              children: [
-                const Text(
-                  'Select a deck for each game round',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xff727171),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+            Expanded(
+              child: Column(
+                children: [
+                  const Text(
+                    'Select a deck for each game round',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xff727171),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-                const Spacing.height(33),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: const [
-                    AddDeckContainer(roundNo: 1, hasDeck: true),
-                    Spacing.bigHeight(),
-                    AddDeckContainer(roundNo: 2),
-                    Spacing.bigHeight(),
-                    AddDeckContainer(roundNo: 3),
-                    Spacing.bigHeight(),
-                    AddDeckContainer(roundNo: 4),
-                  ],
-                ),
-              ],
+                  const Spacing.height(33),
+                  Expanded(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: widget.gameRounds,
+                      itemBuilder: (context, index) {
+                        return DeckContainer(
+                          roundNo: index + 1,
+                          // hasDeck: true,
+                          deck: decks[index],
+                          onAddToDeckTapped: () {
+                            showModalBottomSheet(
+                              isDismissible: false,
+                              context: context,
+                              backgroundColor:
+                                  Colors.transparent.withOpacity(0.5),
+                              isScrollControlled: true,
+                              builder: (context) {
+                                return AddDeckBottomSheet(
+                                  onAddDeckPressed: () {
+                                    setState(() {
+                                      decks[index] = allDecks[index];
+                                    });
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, _) =>
+                          const Spacing.height(36),
+                    ),
+                  ),
+                ],
+              ),
             ),
             AppButton(
               text: 'CONTINUE',
@@ -70,13 +116,21 @@ class GameRoundsView extends StatelessWidget {
                   context: (context),
                   builder: (context) {
                     return Container(
-                      decoration: const BoxDecoration(color: Colors.grey),
+                      decoration: const BoxDecoration(
+                        color: Colors.grey,
+                        // borderRadius: BorderRadius.vertical(
+                        //   top: Radius.circular(20),
+                        // ),
+                      ),
                       child: Container(
                         height: 350,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 24),
                         decoration: const BoxDecoration(
                           color: AppColors.light,
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20)
+                          ),
                         ),
                         child: Column(
                           children: [
@@ -155,11 +209,15 @@ class GameRoundsView extends StatelessWidget {
                               ],
                             ),
                             const Spacing.height(48.67),
-                            const AppButton(
-                              text: 'PLAY',
-                              backgroundColor: Color(0xff0F96C5),
-                              borderColor: AppColors.dark,
-                            ),
+                            AppButton(
+                                text: 'PLAY',
+                                backgroundColor: const Color(0xff0F96C5),
+                                borderColor: AppColors.dark,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  Navigator.pushNamed(
+                                      context, Routes.teamPreview);
+                                }),
                           ],
                         ),
                       ),
@@ -174,3 +232,10 @@ class GameRoundsView extends StatelessWidget {
     );
   }
 }
+
+List<DeckModel> allDecks = [
+  DeckModel(deckName: 'Deck 111', deckImage: AppStrings.ronaldo),
+  DeckModel(deckName: 'Deck 222', deckImage: AppStrings.ronaldo),
+  DeckModel(deckName: 'Deck 333', deckImage: AppStrings.ronaldo),
+  DeckModel(deckName: 'Deck 444', deckImage: AppStrings.ronaldo),
+];

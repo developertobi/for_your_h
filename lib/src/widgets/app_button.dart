@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
@@ -7,6 +8,7 @@ import '../core/constants/strings.dart';
 class AppButton extends StatelessWidget {
   final void Function()? onPressed;
   final Color? backgroundColor;
+  final Color? backgroundColor2;
   final Color borderColor;
   final String text;
   final Color? textColor;
@@ -21,6 +23,7 @@ class AppButton extends StatelessWidget {
     Key? key,
     this.onPressed,
     this.backgroundColor = Colors.transparent,
+    this.backgroundColor2,
     required this.text,
     this.textColor = AppColors.light,
     this.borderRadius = 50,
@@ -39,29 +42,43 @@ class AppButton extends StatelessWidget {
       child: SizedBox(
         width: width,
         height: height,
-        child: OutlinedButton(
-          onPressed: isLoading ? null : onPressed,
-          style: OutlinedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadius),
+        child: Container(
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(borderRadius),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                backgroundColor2 == null ? backgroundColor! : backgroundColor2!,
+                backgroundColor!,
+              ],
             ),
-            side: BorderSide(color: borderColor, width: 2),
-            backgroundColor: backgroundColor,
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null) icon!,
-              Text(
-                isLoading ? AppStrings.loading : text,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: textColor,
-                  fontWeight: FontWeight.w700,
-                  fontSize: fontSize,
-                ),
+          child: OutlinedButton(
+            onPressed: isLoading ? null : onPressed,
+            style: OutlinedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
               ),
-            ],
+              side: BorderSide(color: borderColor, width: 2),
+              // backgroundColor: null,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (icon != null) icon!,
+                Text(
+                  isLoading ? AppStrings.loading : text,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.w700,
+                    fontSize: fontSize,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

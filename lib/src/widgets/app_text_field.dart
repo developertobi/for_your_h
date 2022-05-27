@@ -19,7 +19,7 @@ class AppTextField extends StatelessWidget {
   final void Function(String)? onFieldSubmitted;
   final int? maxLines;
   final void Function()? onSelectColorTapped;
-  final Color selectedColor;
+  // final Color selectedColor;
   final Key? theKey;
 
   const AppTextField({
@@ -39,7 +39,7 @@ class AppTextField extends StatelessWidget {
     this.maxLines,
     this.onSelectColorTapped,
     this.theKey,
-    required this.selectedColor,
+    // required this.selectedColor,
   }) : super(key: key);
 
   @override
@@ -73,45 +73,46 @@ class AppTextField extends StatelessWidget {
               contentPadding: const EdgeInsets.all(16),
               hintText: hintText,
               hintStyle: const TextStyle(fontSize: 14),
-              suffixIcon: GestureDetector(
-                onTap: onSelectColorTapped,
-                child: Container(
-                  key: theKey,
-                  margin: const EdgeInsets.only(right: 30, top: 18, bottom: 18),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-                  height: 28,
-                  width: 61,
-                  decoration: BoxDecoration(
-                    color: AppColors.light,
-                    borderRadius: BorderRadius.circular(50),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 9,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ColorContainer(
-                        height: 14.21,
-                        width: 14.21,
-                        color: selectedColor,
-                        hasBorder: true,
-                      ),
-                      const Icon(
-                        Icons.keyboard_arrow_down_outlined,
-                        color: Color(0xff2E3A59),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              suffixIcon: suffixIcon,
+              // GestureDetector(
+              //   onTap: onSelectColorTapped,
+              //   child: Container(
+              //     key: theKey,
+              //     margin: const EdgeInsets.only(right: 30, top: 18, bottom: 18),
+              //     padding:
+              //         const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+              //     height: 28,
+              //     width: 61,
+              //     decoration: BoxDecoration(
+              //       color: AppColors.light,
+              //       borderRadius: BorderRadius.circular(50),
+              //       boxShadow: [
+              //         BoxShadow(
+              //           color: Colors.grey.withOpacity(0.5),
+              //           spreadRadius: 1,
+              //           blurRadius: 9,
+              //           offset: Offset(0, 2),
+              //         ),
+              //       ],
+              //     ),
+              //     child: Row(
+              //       mainAxisSize: MainAxisSize.min,
+              //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //       children: [
+              //         ColorContainer(
+              //           height: 14.21,
+              //           width: 14.21,
+              //           color: selectedColor,
+              //           hasBorder: true,
+              //         ),
+              //         const Icon(
+              //           Icons.keyboard_arrow_down_outlined,
+              //           color: Color(0xff2E3A59),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
                 borderSide: const BorderSide(),

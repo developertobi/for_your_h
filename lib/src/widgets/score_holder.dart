@@ -22,6 +22,34 @@ class ScoreHolder extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.blue,
               borderRadius: BorderRadius.circular(12),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xff0F96C5),
+                  Color(0xff0F42C5),
+                ],
+              ),
+            ),
+            child: ClipRect(
+              clipBehavior: Clip.hardEdge,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 160.0),
+                child: OverflowBox(
+                  maxHeight: 270,
+                  maxWidth: 270,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        width: 40,
+                        color: AppColors.light.withOpacity(0.18),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
           Image.asset(
@@ -42,31 +70,71 @@ class ScoreHolder extends StatelessWidget {
                     height: 123.84,
                     width: 235.84,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: Color(0xff2363B8),
                       border: Border.all(
                         color: AppColors.light,
                         width: 4.55,
                       ),
                       borderRadius: BorderRadius.circular(10.93),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Stack(
+                      alignment: Alignment.center,
                       children: [
-                        Text(
-                          '$score',
-                          style: const TextStyle(
-                            color: AppColors.light,
-                            fontSize: 58.28,
-                            fontWeight: FontWeight.w700,
+                        ClipRect(
+                          clipBehavior: Clip.hardEdge,
+                          child: OverflowBox(
+                            maxHeight: 200,
+                            maxWidth: 200,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  width: 30,
+                                  color: AppColors.light.withOpacity(0.18),
+                                ),
+                              ),
+                              child: ClipRect(
+                                clipBehavior: Clip.hardEdge,
+                                child: OverflowBox(
+                                  maxHeight: 100,
+                                  maxWidth: 100,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        width: 30,
+                                        color:
+                                            AppColors.light.withOpacity(0.18),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                        const Text(
-                          'Cards!',
-                          style: TextStyle(
-                            color: AppColors.light,
-                            fontSize: 32.78,
-                            fontWeight: FontWeight.w700,
-                          ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '$score',
+                              style: const TextStyle(
+                                color: AppColors.light,
+                                fontSize: 58.28,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const Text(
+                              'Cards!',
+                              style: TextStyle(
+                                color: AppColors.light,
+                                fontSize: 32.78,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

@@ -2,14 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:for_your_head/src/core/constants/colors.dart';
 import 'package:for_your_head/src/core/constants/images.dart';
 import 'package:for_your_head/src/core/routes.dart';
+import 'package:for_your_head/src/features/models/team_details_arg.dart';
 import 'package:for_your_head/src/widgets/app_big_button.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
 import 'package:for_your_head/src/widgets/app_dialog.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
+import 'package:for_your_head/src/widgets/versus_selection.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  int noOfTeams = 2;
+  int gameRounds = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,247 +76,135 @@ class HomeView extends StatelessWidget {
                     context: context,
                     barrierDismissible: false,
                     builder: (context) {
-                      return AppDialog(
-                        title: Container(
-                          height: 104,
-                          decoration: const BoxDecoration(
-                            color: Colors.blue,
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Color(0xff9064EC),
-                                Color(0xff39187E),
+                      return StatefulBuilder(
+                        builder: (context, setState) => AppDialog(
+                          backgroundColor: AppColors.light,
+                          title: Container(
+                            height: 104,
+                            decoration: const BoxDecoration(
+                              color: Colors.blue,
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color(0xff9064EC),
+                                  Color(0xff39187E),
+                                ],
+                              ),
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Text(
+                                      'Versus',
+                                      style: TextStyle(
+                                        color: AppColors.light,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 24,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Select Number of teams and rounds',
+                                      style: TextStyle(
+                                        color: Color(0xffE1E1E1),
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: GestureDetector(
+                                    onTap: () => Navigator.pop(context),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 16, right: 15),
+                                      child: CircleAvatar(
+                                        backgroundColor:
+                                            AppColors.light.withOpacity(0.2),
+                                        radius: 12,
+                                        child: const Icon(
+                                          Icons.close,
+                                          color: AppColors.light,
+                                          size: 9,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Text(
-                                    'Versus',
-                                    style: TextStyle(
-                                      color: AppColors.light,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 24,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Select Number of teams and rounds',
-                                    style: TextStyle(
-                                      color: Color(0xffE1E1E1),
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: GestureDetector(
-                                  onTap: () => Navigator.pop(context),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 16, right: 15),
-                                    child: CircleAvatar(
-                                      backgroundColor:
-                                          AppColors.light.withOpacity(0.2),
-                                      radius: 12,
-                                      child: const Icon(
-                                        Icons.close,
-                                        color: AppColors.light,
-                                        size: 9,
-                                      ),
-                                    ),
-                                  ),
+                          content: Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                VersusSelection(
+                                  title: 'Number of teams',
+                                  number: noOfTeams,
+                                  maximum: 4,
+                                  onReduceTapped: () {
+                                    setState(() {
+                                      if (noOfTeams > 2) {
+                                        noOfTeams--;
+                                      }
+                                    });
+                                  },
+                                  onIncreaseTapped: () {
+                                    setState(() {
+                                      if (noOfTeams < 4) {
+                                        noOfTeams++;
+                                      }
+                                    });
+                                  },
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        content: Padding(
-                          padding: const EdgeInsets.all(32.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Text(
-                                'Number of teams',
-                                style: TextStyle(
-                                  color: AppColors.dark,
+                                const Spacing.height(25),
+                                VersusSelection(
+                                  title: 'Game rounds',
+                                  number: gameRounds,
+                                  maximum: 7,
+                                  onReduceTapped: () {
+                                    setState(() {
+                                      if (gameRounds > 1) {
+                                        gameRounds--;
+                                      }
+                                    });
+                                  },
+                                  onIncreaseTapped: () {
+                                    setState(() {
+                                      if (gameRounds < 7) {
+                                        gameRounds++;
+                                      }
+                                    });
+                                  },
+                                ),
+                                const Spacing.height(41),
+                                AppButton(
+                                  text: 'CONTINUE',
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w600,
+                                  backgroundColor: const Color(0xffEFA83C),
+                                  textColor: AppColors.dark,
+                                  borderColor: AppColors.dark,
+                                  height: 48,
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.teamDetails,
+                                      arguments: TeamDetailsArg(
+                                        noOfTeams: noOfTeams,
+                                        gameRounds: gameRounds,
+                                      ),
+                                    );
+                                  },
                                 ),
-                              ),
-                              const Spacing.height(18),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                // crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(),
-                                    ),
-                                    child: const CircleAvatar(
-                                      backgroundColor: Colors.transparent,
-                                      child: Text(
-                                        '-',
-                                        style: TextStyle(
-                                          color: AppColors.dark,
-                                          fontSize: 26,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacing.width(21),
-                                  Container(
-                                    width: 86,
-                                    height: 42,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(),
-                                      color: const Color(0xffE2E2E2)
-                                          .withOpacity(0.29),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        '2',
-                                        style: TextStyle(
-                                          color: Color(0xff175B73),
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacing.width(21),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(),
-                                    ),
-                                    child: const CircleAvatar(
-                                      backgroundColor: Colors.transparent,
-                                      child: Text(
-                                        '+',
-                                        style: TextStyle(
-                                          color: AppColors.dark,
-                                          fontSize: 26,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Spacing.tinyHeight(),
-                              Text(
-                                'MAX:4',
-                                style: TextStyle(
-                                  color: AppColors.dark.withOpacity(0.47),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              const Spacing.height(25),
-                              const Text(
-                                'Game rounds',
-                                style: TextStyle(
-                                  color: AppColors.dark,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const Spacing.height(18),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                // crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(),
-                                    ),
-                                    child: const CircleAvatar(
-                                      backgroundColor: Colors.transparent,
-                                      child: Text(
-                                        '-',
-                                        style: TextStyle(
-                                          color: AppColors.dark,
-                                          fontSize: 26,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacing.width(21),
-                                  Container(
-                                    width: 86,
-                                    height: 42,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(),
-                                      color: const Color(0xffE2E2E2)
-                                          .withOpacity(0.29),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        '3',
-                                        style: TextStyle(
-                                          color: Color(0xff175B73),
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacing.width(21),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(),
-                                    ),
-                                    child: const CircleAvatar(
-                                      backgroundColor: Colors.transparent,
-                                      child: Text(
-                                        '+',
-                                        style: TextStyle(
-                                          color: AppColors.dark,
-                                          fontSize: 26,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Spacing.tinyHeight(),
-                              Text(
-                                'MAX:7',
-                                style: TextStyle(
-                                  color: AppColors.dark.withOpacity(0.47),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              const Spacing.height(41),
-                              AppButton(
-                                text: 'CONTINUE',
-                                fontSize: 16,
-                                backgroundColor: const Color(0xffEFA83C),
-                                textColor: AppColors.dark,
-                                borderColor: AppColors.dark,
-                                height: 48,
-                                onPressed: () => Navigator.pushNamed(
-                                    context, Routes.teamDetails),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );

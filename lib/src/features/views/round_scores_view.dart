@@ -13,7 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constants/colors.dart';
 import '../../core/constants/strings.dart';
-import '../../widgets/add_deck_container.dart';
+import '../../widgets/deck_container.dart';
 
 class RoundScoreView extends StatelessWidget {
   const RoundScoreView({Key? key}) : super(key: key);
@@ -137,11 +137,13 @@ class RoundScoreView extends StatelessWidget {
                   ),
                 ),
                 const Spacing.height(80),
-                const AppButton(
+                AppButton(
                   text: 'NEXT TEAM',
                   borderColor: AppColors.dark,
-                  backgroundColor: Color(0xffEFA83C),
-                  textColor: Color(0xff484444),
+                  backgroundColor: const Color(0xffEFA83C),
+                  textColor: const Color(0xff484444),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, Routes.finalScoreboard),
                 ),
                 const Spacing.height(20),
                 Visibility(

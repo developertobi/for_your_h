@@ -3,11 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:for_your_head/src/core/constants/colors.dart';
 import 'package:for_your_head/src/core/constants/images.dart';
 import 'package:for_your_head/src/core/constants/svgs.dart';
-import 'package:for_your_head/src/widgets/add_deck_container.dart';
+import 'package:for_your_head/src/widgets/deck_container.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
 import 'package:for_your_head/src/widgets/app_dialog.dart';
 import 'package:for_your_head/src/widgets/final_scoreboard_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
+
+import '../../core/routes.dart';
 
 class FinalScoreboardView extends StatelessWidget {
   const FinalScoreboardView({Key? key}) : super(key: key);
@@ -37,17 +39,70 @@ class FinalScoreboardView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  child: const Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      'Final Scoreboard',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.light,
-                        fontSize: 26,
-                        fontWeight: FontWeight.w700,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 20,
+                        top: 50,
+                        child: SvgPicture.asset(AppSvgs.star),
                       ),
-                    ),
+                      Positioned(
+                        left: 200,
+                        top: 20,
+                        child: Icon(
+                          Icons.star,
+                          color: AppColors.light.withOpacity(0.5),
+                          size: 4,
+                        ),
+                      ),
+                      Positioned(
+                        left: 130,
+                        top: 80,
+                        child: Icon(
+                          Icons.star,
+                          color: AppColors.light.withOpacity(0.5),
+                          size: 5,
+                        ),
+                      ),
+                      Positioned(
+                        left: 190,
+                        bottom: 0,
+                        child: Icon(
+                          Icons.star,
+                          color: AppColors.light.withOpacity(0.5),
+                          size: 7,
+                        ),
+                      ),
+                      Positioned(
+                        right: 100,
+                        top: 50,
+                        child: Icon(
+                          Icons.star,
+                          color: AppColors.light.withOpacity(0.5),
+                          size: 7,
+                        ),
+                      ),
+                      Positioned(
+                        right: -15,
+                        child: SvgPicture.asset(
+                          AppSvgs.star,
+                          width: 36,
+                          height: 36,
+                        ),
+                      ),
+                      const Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
+                          'Final Scoreboard',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AppColors.light,
+                            fontSize: 26,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
@@ -89,23 +144,26 @@ class FinalScoreboardView extends StatelessWidget {
             Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: AppButton(
                     text: 'CONTINUE',
                     borderColor: AppColors.dark,
-                    backgroundColor: Color(0xffEFA83C),
-                    textColor: Color(0xff484444),
+                    backgroundColor: const Color(0xffEFA83C),
+                    textColor: const Color(0xff484444),
+                    onPressed: () => Navigator.pushNamed(
+                        context, Routes.selectedTeamsDetails),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(16, 22, 16, 46),
+                  padding: const EdgeInsets.fromLTRB(16, 22, 16, 46),
                   child: AppButton(
                     text: 'GO HOME',
                     borderColor: AppColors.dark,
                     backgroundColor: AppColors.light,
-                    textColor: Color(0xff484444),
+                    textColor: const Color(0xff484444),
+                    onPressed: () => Navigator.pushNamed(context, Routes.home),
                   ),
                 )
               ],

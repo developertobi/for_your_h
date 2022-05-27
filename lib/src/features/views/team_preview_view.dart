@@ -9,7 +9,7 @@ import 'package:for_your_head/src/widgets/team_n_color.dart';
 
 import '../../core/constants/colors.dart';
 import '../../core/constants/strings.dart';
-import '../../widgets/add_deck_container.dart';
+import '../../widgets/deck_container.dart';
 
 class TeamPreviewView extends StatelessWidget {
   const TeamPreviewView({Key? key}) : super(key: key);
@@ -87,11 +87,13 @@ class TeamPreviewView extends StatelessWidget {
                   ),
                 ],
               ),
-              const AppButton(
-                text: 'CONTINUE',
+              AppButton(
+                text: 'START GAME',
                 borderColor: AppColors.dark,
-                backgroundColor: Color(0xffEFA83C),
-                textColor: Color(0xff484444),
+                backgroundColor: const Color(0xffEFA83C),
+                textColor: const Color(0xff484444),
+                onPressed: () =>
+                    Navigator.pushNamed(context, Routes.roundScore),
               )
             ],
           ),

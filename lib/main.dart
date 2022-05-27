@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
       ),
-      // home: const RoundScoreView(),
-      home: const FinalScoreboardView(),
+      home: const HomeView(),
+      // home: const FinalScoreboardView(),
       // home: const AddDeckView(),
     );
   }
