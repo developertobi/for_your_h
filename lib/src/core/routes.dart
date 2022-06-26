@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:for_your_head/src/features/models/team_details_arg.dart';
 import 'package:for_your_head/src/features/views/creating_teams_view.dart';
+import 'package:for_your_head/src/features/views/question_view.dart';
 
 import '../features/models/selected_team_details_arg.dart';
 import '../features/views/add_deck_view.dart';
 import '../features/views/final_scoreboard_view.dart';
 import '../features/views/game_rounds_view.dart';
 import '../features/views/home_view.dart';
+import '../features/views/play_view.dart';
 import '../features/views/round_scores_view.dart';
 import '../features/views/selected_teams_confirmation_view.dart';
 import '../features/views/team_details_view.dart';
@@ -22,6 +24,8 @@ class Routes {
   static const teamPreview = '/team-preview';
   static const roundScore = '/round-score';
   static const finalScoreboard = '/final-scoreboard';
+  static const play = '/play';
+  static const question = '/question';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -64,6 +68,10 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const RoundScoreView());
       case finalScoreboard:
         return MaterialPageRoute(builder: (_) => const FinalScoreboardView());
+      case play:
+        return MaterialPageRoute(builder: (_) => const PlayView());
+      case question:
+        return MaterialPageRoute(builder: (_) => const QuestionView());
 
       default:
         return MaterialPageRoute(

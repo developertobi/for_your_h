@@ -4,25 +4,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:for_your_head/src/core/constants/colors.dart';
+import 'package:for_your_head/src/widgets/app_button.dart';
 
-class PlayView extends StatefulWidget {
-  const PlayView({Key? key}) : super(key: key);
+import '../../core/constants/images.dart';
+
+class QuestionView extends StatefulWidget {
+  const QuestionView({Key? key}) : super(key: key);
 
   @override
-  State<PlayView> createState() => _PlayViewState();
+  State<QuestionView> createState() => _QuestionViewState();
 }
 
-class _PlayViewState extends State<PlayView> {
+class _QuestionViewState extends State<QuestionView> {
   bool timerVisible = false;
-  static const maxSeconds = 30;
-  int seconds = maxSeconds;
+  static const maxSeconds = 60;
+  Duration duration = const Duration(seconds: 60);
   Timer? timer;
 
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (seconds > 0) {
+      const removeSeconds = 1;
+      if (duration.inSeconds > 0) {
         setState(() {
-          seconds--;
+          int seconds = duration.inSeconds - removeSeconds;
+
+          duration = Duration(seconds: seconds);
         });
       }
     });
@@ -31,6 +37,7 @@ class _PlayViewState extends State<PlayView> {
   @override
   void initState() {
     super.initState();
+    startTimer();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -53,59 +60,62 @@ class _PlayViewState extends State<PlayView> {
 
   @override
   Widget build(BuildContext context) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+
     return Scaffold(
-      backgroundColor: Colors.blue,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      backgroundColor: Colors.white,
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: AppColors.dark, width: 2),
+          image: const DecorationImage(
+            image: AssetImage(AppImages.playBackground),
+            opacity: 0.05,
+          ),
+        ),
+        margin: const EdgeInsets.all(8),
+        child: Stack(
           children: [
-            timerVisible
-                ? Container()
-                : const Text(
-                    'PLACE ON FOREHEAD',
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'CAPTAIN AMERICA',
                     style: TextStyle(
+                      color: AppColors.light,
+                      fontSize: 68,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    '$minutes:$seconds',
+                    style: const TextStyle(
                       color: AppColors.light,
                       fontSize: 48,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-            timerVisible
-                ? Container()
-                : GestureDetector(
-                    onTap: () {
-                      startTimer();
-                      setState(() {
-                        timerVisible = true;
-                      });
-                    },
-                    child: const Text(
-                      'OR TAP SCREEN TO START',
-                      style: TextStyle(
-                        color: AppColors.light,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-            !timerVisible
-                ? Container()
-                : Text(
-                    '$seconds',
-                    style: const TextStyle(
-                      color: AppColors.light,
-                      fontSize: 88.14,
-                    ),
-                  ),
-            !timerVisible
-                ? Container()
-                : const Text(
-                    'GET READY',
-                    style: TextStyle(
-                      color: AppColors.light,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 46, left: 41),
+              child: AppButton(
+                width: 56,
+                height: 56,
+                text: '',
+                icon: Icon(
+                  Icons.close,
+                  color: AppColors.dark,
+                ),
+                backgroundColor: AppColors.light,
+                borderColor: AppColors.dark,
+              ),
+            ),
           ],
         ),
       ),

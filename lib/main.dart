@@ -5,6 +5,7 @@ import 'package:for_your_head/src/features/views/add_deck_view.dart';
 import 'package:for_your_head/src/features/views/final_scoreboard_view.dart';
 import 'package:for_your_head/src/features/views/game_rounds_view.dart';
 import 'package:for_your_head/src/features/views/home_view.dart';
+import 'package:for_your_head/src/features/views/result_view.dart';
 import 'package:for_your_head/src/features/views/round_scores_view.dart';
 import 'package:for_your_head/src/features/views/team_preview_view.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
       ),
       home: const HomeView(),
-      // home: const FinalScoreboardView(),
+      // home: const ResultView(),
       // home: const AddDeckView(),
     );
   }

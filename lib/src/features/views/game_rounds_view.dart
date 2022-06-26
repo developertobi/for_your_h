@@ -116,21 +116,15 @@ class _GameRoundsViewState extends State<GameRoundsView> {
                   context: (context),
                   builder: (context) {
                     return Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                        // borderRadius: BorderRadius.vertical(
-                        //   top: Radius.circular(20),
-                        // ),
-                      ),
+                      decoration: const BoxDecoration(color: Colors.black54),
                       child: Container(
                         height: 350,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 24),
                         decoration: const BoxDecoration(
                           color: AppColors.light,
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(20)
-                          ),
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(20)),
                         ),
                         child: Column(
                           children: [
@@ -157,6 +151,11 @@ class _GameRoundsViewState extends State<GameRoundsView> {
                                     height: 45.67,
                                     // width: null,
                                     borderRadius: 7.61,
+                                    onPressed: () async {
+                                      await showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now());
+                                    },
                                   ),
                                 ),
                                 const Spacing.width(24.49),
@@ -210,14 +209,18 @@ class _GameRoundsViewState extends State<GameRoundsView> {
                             ),
                             const Spacing.height(48.67),
                             AppButton(
-                                text: 'PLAY',
-                                backgroundColor: const Color(0xff0F96C5),
-                                borderColor: AppColors.dark,
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  Navigator.pushNamed(
-                                      context, Routes.teamPreview);
-                                }),
+                              text: 'PLAY',
+                              backgroundColor: const Color(0xff0F96C5),
+                              borderColor: AppColors.dark,
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pushNamed(
+                                  context,
+                                  Routes.play,
+                                  // Routes.teamPreview,
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ),
