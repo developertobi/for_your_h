@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
-import '../core/constants/colors.dart';
+import '../core/constant/colors.dart';
 
 class VersusSelection extends StatelessWidget {
   const VersusSelection({

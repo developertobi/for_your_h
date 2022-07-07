@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:for_your_head/src/core/constants/images.dart';
 import 'package:for_your_head/src/core/routes.dart';
+import 'package:for_your_head/src/features/models/response.dart';
+import 'package:for_your_head/src/features/models/result_arg.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
 import 'package:for_your_head/src/widgets/app_text_field.dart';
 import 'package:for_your_head/src/widgets/image_container.dart';
@@ -11,12 +12,17 @@ import 'package:for_your_head/src/widgets/spacing.dart';
 import 'package:for_your_head/src/widgets/team_n_color.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../core/constants/colors.dart';
-import '../../core/constants/strings.dart';
+import '../../core/constant/colors.dart';
 import '../../widgets/deck_container.dart';
+import '../../widgets/responses.dart';
+import '../../widgets/video_preview.dart';
 
 class RoundScoreView extends StatelessWidget {
-  const RoundScoreView({Key? key}) : super(key: key);
+  const RoundScoreView({
+    Key? key,
+    required this.args,
+  }) : super(key: key);
+  final ResultArg args;
 
   @override
   Widget build(BuildContext context) {
@@ -54,56 +60,13 @@ class RoundScoreView extends StatelessWidget {
                   ),
                 ),
                 const Spacing.mediumHeight(),
-                const ScoreHolder(score: 3),
+                ScoreHolder(score: args.score),
                 const Spacing.mediumHeight(),
                 Container(
                   width: 310,
                   padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
                   child: Card(
-                    child: Column(
-                      children: [
-                        const Text(
-                          'Squid Game',
-                          style: TextStyle(
-                            color: Color(0xff0F96C5),
-                            fontSize: 42,
-                          ),
-                        ),
-                        const Text(
-                          '007',
-                          style: TextStyle(
-                            color: Color(0xff85828E),
-                            fontSize: 42,
-                          ),
-                        ),
-                        const Text(
-                          'Eternals',
-                          style: TextStyle(
-                            color: Color(0xff0F96C5),
-                            fontSize: 42,
-                          ),
-                        ),
-                        const Text(
-                          'Avatar',
-                          style: TextStyle(
-                            color: Color(0xff0F96C5),
-                            fontSize: 42,
-                          ),
-                        ),
-                        const Text(
-                          'Black Panther',
-                          style: TextStyle(
-                            color: Color(0xff0F96C5),
-                            fontSize: 42,
-                          ),
-                        ),
-                        const Spacing.height(32),
-                        Container(
-                          height: 3,
-                          color: const Color(0xff0F96C5),
-                        ),
-                      ],
-                    ),
+                    child: Responses(responses: args.response),
                   ),
                 ),
                 const Spacing.height(26),
@@ -114,22 +77,25 @@ class RoundScoreView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          'Game Playback',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: GoogleFonts.caveat().fontFamily,
-                            color: AppColors.light,
-                            fontSize: 42.83,
-                            fontWeight: FontWeight.w400,
+                        RotationTransition(
+                          turns: const AlwaysStoppedAnimation(356 / 360),
+                          child: Text(
+                            'Game Playback',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: GoogleFonts.caveat().fontFamily,
+                              color: AppColors.light,
+                              fontSize: 42.83,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Container(
                             color: Colors.grey,
                             margin: const EdgeInsets.fromLTRB(17, 0, 17, 17),
-                            child:
-                                const Center(child: Text('Video player here')),
+                            child: VideoPreview(args.videoFile),
+                            // const Center(child: Text('Video player here')),
                           ),
                         ),
                       ],

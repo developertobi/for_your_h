@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../core/constants/colors.dart';
-import '../../core/constants/images.dart';
-import '../../core/constants/strings.dart';
+import '../../core/constant/colors.dart';
+import '../../core/constant/strings.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/app_checkbox.dart';
 import '../../widgets/close_button.dart';

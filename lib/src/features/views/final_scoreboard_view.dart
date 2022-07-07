@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:for_your_head/src/core/constants/colors.dart';
-import 'package:for_your_head/src/core/constants/images.dart';
-import 'package:for_your_head/src/core/constants/svgs.dart';
-import 'package:for_your_head/src/widgets/deck_container.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
 import 'package:for_your_head/src/widgets/app_dialog.dart';
+import 'package:for_your_head/src/widgets/deck_container.dart';
 import 'package:for_your_head/src/widgets/final_scoreboard_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
+import '../../core/constant/colors.dart';
+import '../../core/constant/images.dart';
+import '../../core/constant/svgs.dart';
 import '../../core/routes.dart';
 
 class FinalScoreboardView extends StatelessWidget {

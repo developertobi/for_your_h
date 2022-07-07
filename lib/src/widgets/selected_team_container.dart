@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/constants/colors.dart';
+import '../core/constant/colors.dart';
 
 class SelectedTeamContainer extends StatelessWidget {
   const SelectedTeamContainer({

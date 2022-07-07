@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:for_your_head/src/core/constants/images.dart';
-import 'package:for_your_head/src/core/constants/strings.dart';
 import 'package:for_your_head/src/features/models/deck_model.dart';
 import 'package:for_your_head/src/features/views/game_rounds_view.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
@@ -13,7 +11,7 @@ import 'package:for_your_head/src/widgets/image_container.dart';
 import 'package:for_your_head/src/widgets/search_text_field_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
-import '../core/constants/colors.dart';
+import '../core/constant/colors.dart';
 
 class DeckContainer extends StatelessWidget {
   const DeckContainer({

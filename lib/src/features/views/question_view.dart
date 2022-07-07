@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:for_your_head/src/core/constants/colors.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
 
-import '../../core/constants/images.dart';
+import '../../core/constant/colors.dart';
+import '../../core/constant/images.dart';
 
 class QuestionView extends StatefulWidget {
   const QuestionView({Key? key}) : super(key: key);

@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
-import '../core/constants/colors.dart';
-import '../core/constants/strings.dart';
+import '../core/constant/colors.dart';
+import '../core/constant/strings.dart';
 
 class AppButton extends StatelessWidget {
   final void Function()? onPressed;

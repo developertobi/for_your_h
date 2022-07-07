@@ -1,13 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:for_your_head/src/core/constants/colors.dart';
-import 'package:for_your_head/src/widgets/app_button.dart';
 import 'package:for_your_head/src/widgets/game_alert.dart';
-
-import '../../core/constants/images.dart';
 
 class ResultView extends StatefulWidget {
   const ResultView({Key? key}) : super(key: key);

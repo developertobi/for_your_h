@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../core/constants/colors.dart';
-import '../core/constants/images.dart';
+import '../core/constant/colors.dart';
+import '../core/constant/images.dart';
 
 class ScoreHolder extends StatelessWidget {
   const ScoreHolder({
@@ -22,7 +22,7 @@ class ScoreHolder extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.blue,
               borderRadius: BorderRadius.circular(12),
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
@@ -70,7 +70,7 @@ class ScoreHolder extends StatelessWidget {
                     height: 123.84,
                     width: 235.84,
                     decoration: BoxDecoration(
-                      color: Color(0xff2363B8),
+                      color: const Color(0xff2363B8),
                       border: Border.all(
                         color: AppColors.light,
                         width: 4.55,
@@ -126,9 +126,9 @@ class ScoreHolder extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            const Text(
-                              'Cards!',
-                              style: TextStyle(
+                            Text(
+                              score < 2 ? 'Card!' : 'Cards!',
+                              style: const TextStyle(
                                 color: AppColors.light,
                                 fontSize: 32.78,
                                 fontWeight: FontWeight.w700,

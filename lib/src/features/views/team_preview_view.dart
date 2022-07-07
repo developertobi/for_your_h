@@ -7,8 +7,8 @@ import 'package:for_your_head/src/widgets/selected_team_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 import 'package:for_your_head/src/widgets/team_n_color.dart';
 
-import '../../core/constants/colors.dart';
-import '../../core/constants/strings.dart';
+import '../../core/constant/colors.dart';
+import '../../core/constant/strings.dart';
 import '../../widgets/deck_container.dart';
 
 class TeamPreviewView extends StatelessWidget {

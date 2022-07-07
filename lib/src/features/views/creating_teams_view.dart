@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
-import 'package:for_your_head/src/widgets/spacing.dart';
-import 'package:for_your_head/src/widgets/spacing.dart';
-import 'package:for_your_head/src/widgets/spacing.dart';
 
 import '../../widgets/color_container.dart';
 

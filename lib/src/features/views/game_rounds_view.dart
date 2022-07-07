@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:for_your_head/src/core/constants/strings.dart';
 import 'package:for_your_head/src/core/routes.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
 import 'package:for_your_head/src/widgets/app_text_field.dart';
 import 'package:for_your_head/src/widgets/selected_team_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
-import '../../core/constants/colors.dart';
+import '../../core/constant/colors.dart';
+import '../../core/constant/strings.dart';
 import '../../widgets/deck_container.dart';
 import '../models/deck_model.dart';
 import 'add_deck_bottomsheet.dart';
@@ -217,7 +217,8 @@ class _GameRoundsViewState extends State<GameRoundsView> {
                                 Navigator.pushNamed(
                                   context,
                                   Routes.play,
-                                  // Routes.teamPreview,
+                                  arguments: List.generate(
+                                      100, (index) => 'Word $index'),
                                 );
                               },
                             ),

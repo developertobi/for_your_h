@@ -10,6 +10,9 @@ class AppColors {
   static const dark = Color(0xFF000000);
   static const grey = Color(0xFFBDBDBD);
 
+  static const persimmon = Color(0xFFE85D04);
+  static const prussianBlue = Color(0xFF1C3144);
+
   static const defaultShadow = BoxShadow(
     color: Color(0xFFEEEEEE),
     spreadRadius: 10,

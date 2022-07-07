@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:for_your_head/src/features/models/response.dart';
+import 'package:for_your_head/src/features/models/result_arg.dart';
 import 'package:for_your_head/src/features/models/team_details_arg.dart';
 import 'package:for_your_head/src/features/views/creating_teams_view.dart';
 import 'package:for_your_head/src/features/views/question_view.dart';
@@ -7,8 +9,8 @@ import '../features/models/selected_team_details_arg.dart';
 import '../features/views/add_deck_view.dart';
 import '../features/views/final_scoreboard_view.dart';
 import '../features/views/game_rounds_view.dart';
+import '../features/views/game_view.dart';
 import '../features/views/home_view.dart';
-import '../features/views/play_view.dart';
 import '../features/views/round_scores_view.dart';
 import '../features/views/selected_teams_confirmation_view.dart';
 import '../features/views/team_details_view.dart';
@@ -65,11 +67,13 @@ class Routes {
       case teamPreview:
         return MaterialPageRoute(builder: (_) => const TeamPreviewView());
       case roundScore:
-        return MaterialPageRoute(builder: (_) => const RoundScoreView());
+        ResultArg args = settings.arguments as ResultArg;
+        return MaterialPageRoute(builder: (_) => RoundScoreView(args: args));
       case finalScoreboard:
         return MaterialPageRoute(builder: (_) => const FinalScoreboardView());
       case play:
-        return MaterialPageRoute(builder: (_) => const PlayView());
+        List<String> words = settings.arguments as List<String>;
+        return MaterialPageRoute(builder: (_) => GameView(words: words));
       case question:
         return MaterialPageRoute(builder: (_) => const QuestionView());
 

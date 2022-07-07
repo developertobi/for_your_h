@@ -8,7 +8,7 @@ import 'package:for_your_head/src/widgets/app_text_field.dart';
 import 'package:for_your_head/src/widgets/selected_team_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
-import '../../core/constants/colors.dart';
+import '../../core/constant/colors.dart';
 
 class SelectedTeamsConfirmationView extends StatelessWidget {
   final SelectedTeamDetailsArg args;

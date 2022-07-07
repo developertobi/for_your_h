@@ -1,5 +1,7 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:for_your_head/src/core/constants/strings.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:for_your_head/src/core/constant/strings.dart';
 import 'package:for_your_head/src/core/routes.dart';
 import 'package:for_your_head/src/features/views/add_deck_view.dart';
 import 'package:for_your_head/src/features/views/final_scoreboard_view.dart';
@@ -8,18 +10,23 @@ import 'package:for_your_head/src/features/views/home_view.dart';
 import 'package:for_your_head/src/features/views/result_view.dart';
 import 'package:for_your_head/src/features/views/round_scores_view.dart';
 import 'package:for_your_head/src/features/views/team_preview_view.dart';
+import 'package:for_your_head/src/services/navigation_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
-  runApp(const MyApp());
+late List<CameraDescription> cameras;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: AppStrings.appName,
       onGenerateRoute: Routes.generateRoute,
@@ -28,8 +35,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
       ),
       home: const HomeView(),
-      // home: const ResultView(),
-      // home: const AddDeckView(),
+      navigatorKey: ref.read(navigationServiceProvider).navigatorKey,
     );
   }
 }

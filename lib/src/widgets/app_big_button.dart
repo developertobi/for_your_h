@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:for_your_head/src/core/constants/images.dart';
 
-import '../core/constants/colors.dart';
-import '../core/constants/svgs.dart';
+import '../core/constant/colors.dart';
 
 class AppBigButton extends StatelessWidget {
   const AppBigButton({

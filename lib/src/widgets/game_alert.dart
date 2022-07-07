@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../core/constants/colors.dart';
-import '../core/constants/images.dart';
+import '../core/constant/colors.dart';
+import '../core/constant/images.dart';
 
 class GameAlert extends StatelessWidget {
   const GameAlert({

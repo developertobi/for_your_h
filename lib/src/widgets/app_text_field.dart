@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:for_your_head/src/widgets/color_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
-import '../core/constants/colors.dart';
+import '../core/constant/colors.dart';
 
 class AppTextField extends StatelessWidget {
   final String title;

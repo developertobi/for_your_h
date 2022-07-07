@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:for_your_head/src/core/constants/colors.dart';
-import 'package:for_your_head/src/widgets/deck_container.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
 import 'package:for_your_head/src/widgets/app_dialog.dart';
+// import 'package:for_your_head/src/core/constants/colors.dart';
+import 'package:for_your_head/src/widgets/deck_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
+import '../../core/constant/colors.dart';
 import '../../core/routes.dart';
 
 class AddDeckView extends StatelessWidget {
