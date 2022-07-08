@@ -45,8 +45,8 @@ class _GameViewState extends ConsumerState<GameView> {
                 widthFactor: 0.75,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Text(
+                  children: const <Widget>[
+                    Text(
                       'PLACE ON FOREHEAD',
                       style: TextStyle(
                         color: Colors.white,
@@ -54,7 +54,7 @@ class _GameViewState extends ConsumerState<GameView> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const Text(
+                    Text(
                       'OR TAP SCREEN TO START',
                       style: TextStyle(
                         color: Colors.white,
@@ -104,66 +104,72 @@ class _GameViewState extends ConsumerState<GameView> {
                   opacity: 0.85,
                   child: Scaffold(
                     // backgroundColor: gameNotifier.backgroundColor,
-                    body: Container(
-                      decoration: BoxDecoration(
-                        color: gameNotifier.backgroundColor,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: AppColors.dark, width: 2),
-                        image: const DecorationImage(
-                          image: AssetImage(AppImages.playBackground),
-                          opacity: 0.05,
+                    body: GestureDetector(
+                      // behavior: HitTestBehavior.opaque,
+                      // onTap: () {
+                      //   print('TTTTTTTTTTTTTTTTTTTTTTT');
+                      //   gameNotifier.startGame();
+                      // },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: gameNotifier.backgroundColor,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: AppColors.dark, width: 2),
+                          image: const DecorationImage(
+                            image: AssetImage(AppImages.playBackground),
+                            opacity: 0.05,
+                          ),
                         ),
-                      ),
-                      margin: const EdgeInsets.all(8),
-                      child: Center(
-                        child: FractionallySizedBox(
-                          heightFactor: 0.8,
-                          widthFactor: 0.8,
-                          alignment: Alignment.center,
-                          child: gameNotifier.showCountdown
-                              ? Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SizedBox(
-                                      width: 164.6,
-                                      height: 164.6,
-                                      child: Stack(
-                                        fit: StackFit.expand,
-                                        children: [
-                                          CircularProgressIndicator(
-                                            value: gameNotifier.seconds / 3,
-                                            valueColor:
-                                                const AlwaysStoppedAnimation(
-                                                    Colors.white),
-                                            backgroundColor: Colors.grey,
-                                            color: Color(0x66008EB1),
-                                            strokeWidth: 10,
-                                          ),
-                                          Center(
-                                            child: Text(
-                                              gameNotifier.seconds.toString(),
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 88.14,
+                        margin: const EdgeInsets.all(8),
+                        child: Center(
+                          child: FractionallySizedBox(
+                            heightFactor: 0.8,
+                            widthFactor: 0.8,
+                            alignment: Alignment.center,
+                            child: gameNotifier.showCountdown
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(
+                                        width: 164.6,
+                                        height: 164.6,
+                                        child: Stack(
+                                          fit: StackFit.expand,
+                                          children: [
+                                            CircularProgressIndicator(
+                                              value: gameNotifier.seconds / 3,
+                                              valueColor:
+                                                  const AlwaysStoppedAnimation(
+                                                      Colors.white),
+                                              backgroundColor: Colors.grey,
+                                              color: Color(0x66008EB1),
+                                              strokeWidth: 10,
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                gameNotifier.seconds.toString(),
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 88.14,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 28),
-                                    const Text(
-                                      'GET READY',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 24,
-                                      ),
-                                    )
-                                  ],
-                                )
-                              : gameNotifier.content,
+                                      const SizedBox(height: 28),
+                                      const Text(
+                                        'GET READY',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 24,
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                : gameNotifier.content,
 //                     Center(
 //                       child: gameNotifier.timerVisible
 //                           ? Column(
@@ -265,6 +271,7 @@ class _GameViewState extends ConsumerState<GameView> {
 //                               ],
 //                             ),
 //                     ),
+                          ),
                         ),
                       ),
                     ),

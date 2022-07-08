@@ -45,7 +45,7 @@ class GameViewNotifier extends ChangeNotifier {
   Color _backgroundColor = Colors.blue;
   Color get backgroundColor => _backgroundColor;
   String _videoPath = '';
-  String get videoPath => _videoPath;
+  bool _gameStarted = false;
   final player = AudioPlayer();
 
   bool timerVisible = false;
@@ -76,9 +76,20 @@ class GameViewNotifier extends ChangeNotifier {
       print('AccelerometerEvent x - gravity::: ${event.x - gravity}');
       if ((event.x - gravity) > 1) {
         startGame();
+        // startGame();
         _streamSubscription.cancel();
       }
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    print('Dispose callleddddddddd');
+    _streamSubscription.cancel();
+    _tilt.stopListening();
+    _cameraController.dispose();
+    super.dispose();
   }
 
   void initTilt() {
@@ -139,12 +150,12 @@ class GameViewNotifier extends ChangeNotifier {
     wordsIndex = random.nextInt(words.length);
   }
 
-  // This method is separate because I can start game in mre than one way...
-  void startGame() {
-    startTimer();
-    player.setAsset('assets/3-sec-countdown-sound.wav');
-    player.play();
-  }
+  // // This method is separate because I can start game in mre than one way...
+  // void startGame() {
+  //   startTimer();
+  //   player.setAsset('assets/3-sec-countdown-sound.wav');
+  //   player.play();
+  // }
 
   // void startTimer() {
   //   Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -160,29 +171,35 @@ class GameViewNotifier extends ChangeNotifier {
   //     }
   //   });
   // }
-  void startTimer() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_seconds > 0) {
-        _seconds--;
-        _showCountdown = true;
-      }
-      if (_seconds == 0) {
-        setContent(
-          Word(
-            answer: words[wordsIndex],
-            timeLeft: toTwoDigits(timeLeft),
-            isLast5Seconds: false,
-          ),
-        );
-        _showCountdown = false;
-        timer.cancel();
-        HapticFeedback.vibrate();
-        _startTimerCountdown();
-        _tilt.startListening();
-        _cameraController.startVideoRecording();
-      }
+  void startGame() {
+    if (!_gameStarted) {
+      _gameStarted = true;
       notifyListeners();
-    });
+      player.setAsset('assets/3-sec-countdown-sound.wav');
+      player.play();
+      Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (_seconds > 0) {
+          _seconds--;
+          _showCountdown = true;
+        }
+        if (_seconds == 0) {
+          setContent(
+            Word(
+              answer: words[wordsIndex],
+              timeLeft: toTwoDigits(timeLeft),
+              isLast5Seconds: false,
+            ),
+          );
+          _showCountdown = false;
+          timer.cancel();
+          HapticFeedback.vibrate();
+          _startTimerCountdown();
+          _tilt.startListening();
+          _cameraController.startVideoRecording();
+        }
+        notifyListeners();
+      });
+    }
   }
 
   void _startTimerCountdown() {
@@ -190,6 +207,8 @@ class GameViewNotifier extends ChangeNotifier {
       const Duration(seconds: 1),
       (t) async {
         if (timeLeft < 1) {
+          _gameStarted = false;
+          notifyListeners();
           t.cancel();
           _tilt.stopListening();
           _cameraController.stopVideoRecording().then((value) {
