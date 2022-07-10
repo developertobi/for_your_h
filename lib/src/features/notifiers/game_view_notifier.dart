@@ -11,13 +11,7 @@ import 'package:sensors_plus/sensors_plus.dart';
 
 import '../../../utils/tilt.dart';
 import '../../core/constants.dart';
-import '../../core/routes.dart';
-import '../../services/navigation_service.dart';
-import '../../widgets/status.dart';
-import '../../widgets/time_up.dart';
-import '../../widgets/word.dart';
 import '../models/response.dart';
-import '../models/result_arg.dart';
 
 enum TiltAction {
   up,
@@ -27,44 +21,74 @@ enum TiltAction {
 class GameViewNotifier extends ChangeNotifier {
   final Reader _reader;
   GameViewNotifier(this._reader);
-  bool contentIsStatus = false;
+
+  bool _contentIsStatus = false;
+  bool get contentIsStatus => _contentIsStatus;
+
   bool _permissionLoading = false;
   bool get permissionLoading => _permissionLoading;
+
   late CameraController _cameraController;
   CameraController get cameraController => _cameraController;
+
   late PermissionStatus _cameraPermissionStatus;
   late PermissionStatus _micPermissionStatus;
   late PermissionStatus _storagePermissionStatus;
-  late int wordsIndex;
-  List words = [];
+
+  late int _wordsIndex;
+  int get wordIndex => _wordsIndex;
+
+  List<String> _words = [];
+  List<String> get words => _words;
+
   final List<Response> _responses = [];
+  List<Response> get responses => _responses;
+
   late TiltUtil _tilt;
-  int timeLeft = 60;
+
+  int _timeLeft = 60; //TODO: Use appropriate time here...
+  int get timeLeft => _timeLeft;
+
   int _score = 0;
+  int get score => _score;
+
   late StreamSubscription _streamSubscription;
+
   Color _backgroundColor = Colors.blue;
   Color get backgroundColor => _backgroundColor;
+
   String _videoPath = '';
+  String get videoPath => _videoPath;
+
   bool _gameStarted = false;
+
   final player = AudioPlayer();
 
-  bool timerVisible = false;
   bool _showCountdown = false;
   bool get showCountdown => _showCountdown;
+
   // int _maxSeconds = 3;
   // int get maxSeconds => _maxSeconds;
   int _seconds = 3;
   int get seconds => _seconds;
-  Widget? _content;
-  Widget? get content => _content;
+
+  bool _isInitialContent = true;
+  bool get isInitialContent => _isInitialContent;
+
+  bool _timeUp = false;
+  bool get timeUp => _timeUp;
+
+  bool _showQuestion = false;
+  bool get showQuestion => _showQuestion;
+
+  bool _isLast5Seconds = false;
+  bool get isLast5Seconds => _isLast5Seconds;
+
+  bool _isCorrect = false;
+  bool get isCorrect => _isCorrect;
 
   late List<CameraDescription> _cameras;
   List<CameraDescription> get cameras => _cameras;
-
-  void setContent(Widget content) {
-    _content = content;
-    notifyListeners();
-  }
 
   void startListeningForHorizontalPhonePosition() {
     const gravity = 9.80665;
@@ -76,7 +100,6 @@ class GameViewNotifier extends ChangeNotifier {
       print('AccelerometerEvent x - gravity::: ${event.x - gravity}');
       if ((event.x - gravity) > 1) {
         startGame();
-        // startGame();
         _streamSubscription.cancel();
       }
     });
@@ -101,23 +124,18 @@ class GameViewNotifier extends ChangeNotifier {
         _score++;
       },
       onNormal: () {
-        contentIsStatus = false;
-        setContent(
-          Word(
-            answer: words[wordsIndex],
-            timeLeft: toTwoDigits(timeLeft),
-            isLast5Seconds: timeLeft < 6,
-          ),
-        );
+        _contentIsStatus = false;
+        _showQuestion = true;
         _changeBackgroundColor(Colors.blue);
       },
     );
   }
 
   void onTilt(TiltAction direction) {
-    contentIsStatus = true;
-
-    setContent(Status(isCorrect: direction == TiltAction.down));
+    _contentIsStatus = true;
+    _showQuestion = false;
+    _isCorrect = direction == TiltAction.down;
+    notifyListeners();
 
     if (direction == TiltAction.up) {
       _changeBackgroundColor(kPassColor);
@@ -127,69 +145,41 @@ class GameViewNotifier extends ChangeNotifier {
       _changeBackgroundColor(kCorrectColor);
       player.setAsset('assets/correct-sound.wav');
       player.play();
-    }
+    } else {}
 
     _responses.add(
       Response(
         isCorrect: direction == TiltAction.down,
-        word: words[wordsIndex],
+        word: _words[_wordsIndex],
       ),
     );
 
-    words.removeAt(wordsIndex);
+    _words.removeAt(_wordsIndex);
     _randomizeWordIndex();
   }
 
   void initWords({required List<String> words}) {
-    this.words = words;
+    _words = words;
     _randomizeWordIndex();
   }
 
   void _randomizeWordIndex() {
     Random random = Random();
-    wordsIndex = random.nextInt(words.length);
+    _wordsIndex = random.nextInt(_words.length);
   }
 
-  // // This method is separate because I can start game in mre than one way...
-  // void startGame() {
-  //   startTimer();
-  //   player.setAsset('assets/3-sec-countdown-sound.wav');
-  //   player.play();
-  // }
-
-  // void startTimer() {
-  //   Timer.periodic(const Duration(seconds: 1), (timer) {
-  //     if (seconds > 0) {
-  //       seconds--;
-  //       if (seconds == 0) {
-  //         timer.cancel();
-  //         _reader(navigationServiceProvider).navigateToNamed(Routes.question);
-  //         // Navigator.pushNamed(context, Routes.question);
-  //       }
-  //       // Navigator.pushNamed(context, Routes.question);
-  //       notifyListeners();
-  //     }
-  //   });
-  // }
   void startGame() {
     if (!_gameStarted) {
+      _isInitialContent = false;
+      _showCountdown = true;
       _gameStarted = true;
-      notifyListeners();
       player.setAsset('assets/3-sec-countdown-sound.wav');
       player.play();
       Timer.periodic(const Duration(seconds: 1), (timer) {
         if (_seconds > 0) {
           _seconds--;
-          _showCountdown = true;
         }
         if (_seconds == 0) {
-          setContent(
-            Word(
-              answer: words[wordsIndex],
-              timeLeft: toTwoDigits(timeLeft),
-              isLast5Seconds: false,
-            ),
-          );
           _showCountdown = false;
           timer.cancel();
           HapticFeedback.vibrate();
@@ -203,12 +193,16 @@ class GameViewNotifier extends ChangeNotifier {
   }
 
   void _startTimerCountdown() {
+    // I want to show question immediately the timer starts
+    _showQuestion = true;
     Timer.periodic(
       const Duration(seconds: 1),
       (t) async {
-        if (timeLeft < 1) {
+        if (_timeLeft < 1) {
+          _contentIsStatus = false;
+          _showQuestion = false;
           _gameStarted = false;
-          notifyListeners();
+          _timeUp = true;
           t.cancel();
           _tilt.stopListening();
           _cameraController.stopVideoRecording().then((value) {
@@ -218,48 +212,20 @@ class GameViewNotifier extends ChangeNotifier {
           HapticFeedback.vibrate();
           player.setAsset('assets/timeup-sound.wav');
           player.play();
-          setContent(
-            TimeUp(
-              onFinished: () {
-                SystemChrome.setPreferredOrientations([
-                  DeviceOrientation.portraitUp,
-                  DeviceOrientation.portraitDown,
-                ]);
-                // TODO: Send the necessary arguments along...
-                _reader(navigationServiceProvider).navigateToNamed(
-                  Routes.roundScore,
-                  arguments: ResultArg(
-                      response: _responses,
-                      score: _score,
-                      videoFile: _videoPath),
-                );
-              },
-            ),
-          );
           _changeBackgroundColor(kTimeUpColor);
         } else {
-          timeLeft -= 1;
-          bool isLast5sec = false;
+          _timeLeft -= 1;
 
-          if (timeLeft < 6) {
-            if (timeLeft == 4) {
+          if (_timeLeft < 6) {
+            _isLast5Seconds = true;
+            if (_timeLeft == 4) {
               player.setAsset('assets/5-sec-countdown-sound.wav');
               player.play();
             }
             HapticFeedback.vibrate();
-            isLast5sec = true;
-          }
-
-          if (!contentIsStatus) {
-            setContent(
-              Word(
-                answer: words[wordsIndex],
-                timeLeft: toTwoDigits(timeLeft),
-                isLast5Seconds: isLast5sec,
-              ),
-            );
           }
         }
+        notifyListeners();
       },
     );
   }
@@ -279,12 +245,6 @@ class GameViewNotifier extends ChangeNotifier {
     print('_micPermissionStatus: $_micPermissionStatus');
     print('_storagePermissionStatus: $_storagePermissionStatus');
 
-    // Provider.of<Results>(context, listen: false).permissionStatuses = {
-    //   'camera': _cameraPermissionStatus,
-    //   'microphone': _micPermissionStatus,
-    //   'storage': _storagePermissionStatus,
-    // };
-
     if (_cameraPermissionStatus.isGranted && _micPermissionStatus.isGranted) {
       print('Camera controller initializer...');
       // Init camera
@@ -292,9 +252,6 @@ class GameViewNotifier extends ChangeNotifier {
           CameraController(_cameras[1], ResolutionPreset.medium);
       _cameraController.initialize().then((_) {
         print('Camera controller initialized...');
-        // if (!mounted) {
-        //   return;
-        // }
         notifyListeners();
       });
     }
