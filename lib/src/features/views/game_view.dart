@@ -143,8 +143,8 @@ class _GameViewState extends ConsumerState<GameView> {
                                     ? Word(
                                         answer: gameNotifier
                                             .words[gameNotifier.wordIndex],
-                                        timeLeft: gameNotifier
-                                            .toTwoDigits(gameNotifier.timeLeft),
+                                        timeLeft:
+                                            gameNotifier.durationRemaining(),
                                         isLast5Seconds:
                                             gameNotifier.isLast5Seconds,
                                       )
@@ -161,11 +161,15 @@ class _GameViewState extends ConsumerState<GameView> {
                                                     DeviceOrientation
                                                         .portraitDown,
                                                   ]);
+                                                  // ref
+                                                  //     .read(
+                                                  //         navigationServiceProvider)
+                                                  //     .navigateBack();
                                                   // TODO: Send the necessary arguments along...
                                                   ref
                                                       .read(
                                                           navigationServiceProvider)
-                                                      .navigateOffNamed(
+                                                      .navigateToNamed(
                                                         Routes.roundScore,
                                                         arguments: ResultArg(
                                                             response:
@@ -224,6 +228,28 @@ class _GameViewState extends ConsumerState<GameView> {
                     ),
                   ),
                 ),
+                if (!gameNotifier.showCountdown)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 32, top: 32),
+                    child: GestureDetector(
+                      onTap: () {
+                        //TODO: Implement
+                      },
+                      child: const CircleAvatar(
+                        radius: 28,
+                        backgroundColor: Colors.black,
+                        child: CircleAvatar(
+                          radius: 24,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.clear_rounded,
+                            color: Colors.black,
+                            size: 32,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
               ],
             ),
     );

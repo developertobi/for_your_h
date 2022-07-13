@@ -13,11 +13,11 @@ class Status extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        isCorrect ? 'CORRECT' : 'PASS',
+        isCorrect ? 'Correct!' : 'Pass!',
         style: kNunitoTextStyle.copyWith(
-          fontSize: 50,
-          fontWeight: FontWeight.w900,
-          color: Colors.black,
+          fontSize: 68,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
         ),
       ),
     );

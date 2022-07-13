@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:for_your_head/src/core/routes.dart';
 import 'package:for_your_head/src/features/models/response.dart';
 import 'package:for_your_head/src/features/models/result_arg.dart';
@@ -17,12 +19,27 @@ import '../../widgets/deck_container.dart';
 import '../../widgets/responses.dart';
 import '../../widgets/video_preview.dart';
 
-class RoundScoreView extends StatelessWidget {
+class RoundScoreView extends ConsumerStatefulWidget {
   const RoundScoreView({
     Key? key,
     required this.args,
   }) : super(key: key);
   final ResultArg args;
+
+  @override
+  ConsumerState<RoundScoreView> createState() => _RoundScoreViewState();
+}
+
+class _RoundScoreViewState extends ConsumerState<RoundScoreView> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +77,13 @@ class RoundScoreView extends StatelessWidget {
                   ),
                 ),
                 const Spacing.mediumHeight(),
-                ScoreHolder(score: args.score),
+                ScoreHolder(score: widget.args.score),
                 const Spacing.mediumHeight(),
                 Container(
                   width: 310,
                   padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
                   child: Card(
-                    child: Responses(responses: args.response),
+                    child: Responses(responses: widget.args.response),
                   ),
                 ),
                 const Spacing.height(26),
@@ -94,7 +111,7 @@ class RoundScoreView extends StatelessWidget {
                           child: Container(
                             color: Colors.grey,
                             margin: const EdgeInsets.fromLTRB(17, 0, 17, 17),
-                            child: VideoPreview(args.videoFile),
+                            child: VideoPreview(widget.args.videoFile),
                             // const Center(child: Text('Video player here')),
                           ),
                         ),

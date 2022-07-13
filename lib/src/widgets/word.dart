@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../core/constants.dart';
@@ -16,23 +17,20 @@ class Word extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Positioned(
-          top: 10,
-          child: Text(
-            '0:$timeLeft',
-            style:
-                kNunitoTextStyle.copyWith(fontSize: isLast5Seconds ? 50 : 24),
-          ),
-        ),
         Text(
           answer,
           style: kNunitoTextStyle.copyWith(
-            fontSize: 50,
-            fontWeight: FontWeight.bold,
+            fontSize: 68,
+            fontWeight: FontWeight.w700,
           ),
+        ),
+        const SizedBox(height: 9),
+        Text(
+          timeLeft,
+          style: kNunitoTextStyle.copyWith(fontSize: isLast5Seconds ? 48 : 48),
         ),
       ],
     );

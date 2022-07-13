@@ -4,34 +4,20 @@ import 'package:flutter/material.dart';
 import '../core/constants.dart';
 
 class TimeUp extends StatelessWidget {
-  TimeUp({required this.onFinished});
+  const TimeUp({required this.onFinished});
   final void Function()? onFinished;
   @override
   Widget build(BuildContext context) {
     return Center(
       child: ScaleAnimatedTextKit(
         scalingFactor: 1.5,
-        text: ['TIME UP'],
+        text: const ['Time up!'],
         totalRepeatCount: 1,
         textStyle: kNunitoTextStyle.copyWith(
-          fontSize: 70,
-          fontWeight: FontWeight.w900,
+          fontSize: 68,
+          fontWeight: FontWeight.w700,
         ),
         onFinished: onFinished,
-        //     () {
-        //   SystemChrome.setPreferredOrientations([
-        //     DeviceOrientation.portraitUp,
-        //     DeviceOrientation.portraitDown,
-        //   ]);
-        //
-        //   // Navigator.of(context).pushNamedAndRemoveUntil(
-        //   //   HomeScreen.routeName,
-        //   //   (route) => false,
-        //   //   arguments: {
-        //   //     'results': "",
-        //   //   },
-        //   // );
-        // },
       ),
     );
   }

@@ -46,9 +46,6 @@ class GameViewNotifier extends ChangeNotifier {
 
   late TiltUtil _tilt;
 
-  int _timeLeft = 60; //TODO: Use appropriate time here...
-  int get timeLeft => _timeLeft;
-
   int _score = 0;
   int get score => _score;
 
@@ -71,6 +68,9 @@ class GameViewNotifier extends ChangeNotifier {
   // int get maxSeconds => _maxSeconds;
   int _seconds = 3;
   int get seconds => _seconds;
+
+  Duration _duration = const Duration(
+      seconds: 12); // TODO: Get seconds from the appropriate place
 
   bool _isInitialContent = true;
   bool get isInitialContent => _isInitialContent;
@@ -198,7 +198,8 @@ class GameViewNotifier extends ChangeNotifier {
     Timer.periodic(
       const Duration(seconds: 1),
       (t) async {
-        if (_timeLeft < 1) {
+        if (_duration.inSeconds < 1) {
+          _streamSubscription.cancel();
           _contentIsStatus = false;
           _showQuestion = false;
           _gameStarted = false;
@@ -214,11 +215,17 @@ class GameViewNotifier extends ChangeNotifier {
           player.play();
           _changeBackgroundColor(kTimeUpColor);
         } else {
-          _timeLeft -= 1;
+          final sec = _duration.inSeconds - 1;
+          if (_duration.inSeconds > 0) {
+            _duration = Duration(seconds: sec);
+          }
+          // _timeLeft -= 1;
 
-          if (_timeLeft < 6) {
+          // if (_timeLeft < 6) {
+          if (_duration.inSeconds < 6) {
             _isLast5Seconds = true;
-            if (_timeLeft == 4) {
+            if (_duration.inSeconds == 4) {
+              // if (_timeLeft == 4) {
               player.setAsset('assets/5-sec-countdown-sound.wav');
               player.play();
             }
@@ -259,9 +266,11 @@ class GameViewNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  String toTwoDigits(int num) {
-    if ((num / 10).floor() == 0) return '0${num.toString()}';
-    return num.toString();
+  String durationRemaining() {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final minutes = twoDigits(_duration.inMinutes.remainder(60));
+    final seconds = twoDigits(_duration.inSeconds.remainder(60));
+    return '$minutes:$seconds';
   }
 
   void _changeBackgroundColor(Color color) {
