@@ -20,6 +20,7 @@ enum TiltAction {
 
 class GameViewNotifier extends ChangeNotifier {
   final Reader _reader;
+
   GameViewNotifier(this._reader);
 
   bool _contentIsStatus = false;
@@ -69,8 +70,9 @@ class GameViewNotifier extends ChangeNotifier {
   int _seconds = 3;
   int get seconds => _seconds;
 
+  final bool _soundEnabled = true; //TODO: Get this from the appropriate place
   Duration _duration = const Duration(
-      seconds: 12); // TODO: Get seconds from the appropriate place
+      seconds: 60); // TODO: Get seconds from the appropriate place
 
   bool _isInitialContent = true;
   bool get isInitialContent => _isInitialContent;
@@ -140,12 +142,10 @@ class GameViewNotifier extends ChangeNotifier {
 
     if (direction == TiltAction.up) {
       _changeBackgroundColor(kPassColor);
-      player.setAsset('assets/pass-sound.wav');
-      player.play();
+      playSound(path: 'assets/pass-sound.wav');
     } else if (direction == TiltAction.down) {
       _changeBackgroundColor(kCorrectColor);
-      player.setAsset('assets/correct-sound.wav');
-      player.play();
+      playSound(path: 'assets/correct-sound.wav');
     } else {}
 
     _responses.add(
@@ -174,8 +174,7 @@ class GameViewNotifier extends ChangeNotifier {
       _isInitialContent = false;
       _showCountdown = true;
       _gameStarted = true;
-      player.setAsset('assets/3-sec-countdown-sound.wav');
-      player.play();
+      playSound(path: 'assets/3-sec-countdown-sound.wav');
       Timer.periodic(const Duration(seconds: 1), (timer) {
         if (_seconds > 0) {
           _seconds--;
@@ -212,8 +211,7 @@ class GameViewNotifier extends ChangeNotifier {
           });
 
           HapticFeedback.vibrate();
-          player.setAsset('assets/timeup-sound.wav');
-          player.play();
+          playSound(path: 'assets/timeup-sound.wav');
           _changeBackgroundColor(kTimeUpColor);
         } else {
           final sec = _duration.inSeconds - 1;
@@ -227,8 +225,7 @@ class GameViewNotifier extends ChangeNotifier {
             _isLast5Seconds = true;
             if (_duration.inSeconds == 4) {
               // if (_timeLeft == 4) {
-              player.setAsset('assets/5-sec-countdown-sound.wav');
-              player.play();
+              playSound(path: 'assets/5-sec-countdown-sound.wav');
             }
             HapticFeedback.vibrate();
           }
@@ -277,6 +274,13 @@ class GameViewNotifier extends ChangeNotifier {
   void _changeBackgroundColor(Color color) {
     _backgroundColor = color;
     notifyListeners();
+  }
+
+  void playSound({required String path}) {
+    if (_soundEnabled) {
+      player.setAsset(path);
+      player.play();
+    }
   }
 }
 

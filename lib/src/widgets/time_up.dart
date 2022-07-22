@@ -19,7 +19,7 @@ class TimeUp extends StatelessWidget {
             ),
           )
         ],
-        totalRepeatCount: 1,
+        totalRepeatCount: 3,
         onFinished: onFinished,
       ),
     );

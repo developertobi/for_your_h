@@ -67,7 +67,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
       child: OutlinedButton(
           onPressed: () => ref.read(navigationServiceProvider).navigateToNamed(
                 Routes.play,
-                arguments: List.generate(100, (index) => 'Word $index'),
+                arguments: List.generate(
+                    100,
+                    (index) =>
+                        'Word $index'), //TODO: Pass appropriate argument to the game view
               ),
           child: const Text('Play Game')),
     ));
