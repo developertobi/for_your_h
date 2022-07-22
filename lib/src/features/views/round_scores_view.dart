@@ -3,19 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:for_your_head/src/core/routes.dart';
-import 'package:for_your_head/src/features/models/response.dart';
 import 'package:for_your_head/src/features/models/result_arg.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
-import 'package:for_your_head/src/widgets/app_text_field.dart';
-import 'package:for_your_head/src/widgets/image_container.dart';
 import 'package:for_your_head/src/widgets/score_holder.dart';
-import 'package:for_your_head/src/widgets/selected_team_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 import 'package:for_your_head/src/widgets/team_n_color.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constant/colors.dart';
-import '../../widgets/deck_container.dart';
 import '../../widgets/responses.dart';
 import '../../widgets/video_preview.dart';
 

@@ -25,7 +25,7 @@ const kPassColor = Color(0xFFFFAC4C);
 const kTimeUpColor = Color(0xFFFF4F61);
 
 // Text
-final kNunitoTextStyle = TextStyle(
+const kNunitoTextStyle = TextStyle(
   fontFamily: 'Nunito',
   color: Colors.white,
   fontWeight: FontWeight.w500,

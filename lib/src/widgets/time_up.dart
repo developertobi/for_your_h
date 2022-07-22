@@ -9,14 +9,17 @@ class TimeUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ScaleAnimatedTextKit(
-        scalingFactor: 1.5,
-        text: const ['Time up!'],
+      child: AnimatedTextKit(
+        animatedTexts: [
+          ScaleAnimatedText(
+            'Time up!',
+            textStyle: kNunitoTextStyle.copyWith(
+              fontSize: 68,
+              fontWeight: FontWeight.w700,
+            ),
+          )
+        ],
         totalRepeatCount: 1,
-        textStyle: kNunitoTextStyle.copyWith(
-          fontSize: 68,
-          fontWeight: FontWeight.w700,
-        ),
         onFinished: onFinished,
       ),
     );

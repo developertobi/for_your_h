@@ -98,6 +98,7 @@ class GameViewNotifier extends ChangeNotifier {
       print('AccelerometerEvent y::: ${event.y}');
       print('AccelerometerEvent z::: ${event.z}');
       print('AccelerometerEvent x - gravity::: ${event.x - gravity}');
+      // if ((event.x - gravity).abs() < 2) {
       if ((event.x - gravity) > 1) {
         startGame();
         _streamSubscription.cancel();

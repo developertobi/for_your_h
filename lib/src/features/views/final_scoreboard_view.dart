@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:for_your_head/src/widgets/app_button.dart';
-import 'package:for_your_head/src/widgets/app_dialog.dart';
-import 'package:for_your_head/src/widgets/deck_container.dart';
 import 'package:for_your_head/src/widgets/final_scoreboard_container.dart';
 import 'package:for_your_head/src/widgets/spacing.dart';
 
@@ -145,15 +143,17 @@ class FinalScoreboardView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: AppButton(
                     text: 'CONTINUE',
                     borderColor: AppColors.dark,
-                    backgroundColor: const Color(0xffEFA83C),
-                    textColor: const Color(0xff484444),
-                    onPressed: () => Navigator.pushNamed(
-                        context, Routes.selectedTeamsDetails),
+                    backgroundColor: Color(0xffEFA83C),
+                    textColor: Color(0xff484444),
+                    // onPressed: () => Navigator.pushNamed(
+                    //   context,
+                    //   Routes.selectedTeamsDetails,
+                    // ),
                   ),
                 ),
                 Padding(
